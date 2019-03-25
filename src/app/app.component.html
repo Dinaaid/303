@@ -1,0 +1,60 @@
+<header id="headerX" class="bg-primary text-white p-4 mb-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 id="header-titleX">X-Team <small>members &#12484;</small></h1>
+      </div>
+
+      <div class="col-md-6 align-self-center">
+        <input 
+          #filterX
+          (keyup)="loadMembers(filterX.value)"
+          type="text" class="form-control" id="filterX" 
+          placeholder="Search member...">
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div id="mainX" class="card card-body">
+    <h2 class="titleX">Add New Member yasta</h2>
+    <div class="d-flex mb-3 justify-content-between">
+
+      <input 
+        #newMember [(ngModel)]="newMemberX"
+        (keyup.enter)="addMember(newMember.value)"
+        type="text" class="col-sm-7 form-control" id="newMemberX" autofocus>
+      <button class="col-sm-4 btn btn-dark"
+        (click)="addMember(newMember.value)">Add Yasta</button>
+
+    </div>
+
+    <h2 class="titleX">Members</h2>
+    <ul id="membersX" class="list-group">
+
+      <li *ngFor="let member of members$ | async; let i = index" class="list-group-item form-inline">
+        <span *ngIf="(editId == i) && editMemberX; then showEdit else showMsg"></span>
+        <ng-template #showMsg>{{ member.text }}</ng-template>
+        <ng-template #showEdit>
+          <input
+            #updateText
+            (keyup.enter)="updateMember(member.key, updateText.value)"
+            (keyup.esc)="editMemberX = false"
+            type="text" class="form-control d-inline col-7" value="{{ member.text }}"> 
+        </ng-template>
+        <button class="deleteX btn btn-danger btn-sm float-right" 
+          (click)="deleteMember(member.key)">X</button>
+        <button class="editX btn btn-danger btn-sm float-right mr-2"
+          (click)="editMember(i)">Edit</button>
+      </li>
+
+      <!-- <li class="list-group-item">Ahmed Samir -->
+        <!-- <button class="btn btn-danger btn-sm float-right deleteX">X</button> -->
+        <!-- <button class="btn btn-danger btn-sm float-right mr-2 editX">Edit</button> -->
+      <!-- </li> -->
+    </ul>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
